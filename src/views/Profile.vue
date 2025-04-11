@@ -411,10 +411,10 @@ const alertMessage = ref('');
 // Dados do usuário mockados (em um projeto real, estes viriam da loja (store) de autenticação)
 const user = ref({
   id_usuario: 1,
-  nome: 'João Silva',
-  email: 'joao.silva@email.com',
-  telefone: '(11) 98765-4321',
-  endereco: 'Rua Exemplo, 123, Bairro Centro, São Paulo - SP',
+  nome: 'Matheus Henrique Barbosa de Lima',
+  email: 'matheus.teste@gmail.com',
+  telefone: '(69) 99999-9999',
+  endereco: 'Rua Exemplo, 123, Bairro Centro, Ji-Paraná - RO',
   tipo_usuario: 'Estudante'
 });
 
@@ -437,7 +437,7 @@ const passwordData = ref({
 const preferences = ref({
   emailNotifications: true,
   returnReminders: true,
-  theme: 'light',
+  theme: 'system',
   language: 'pt-BR'
 });
 
