@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen flex flex-col">
       <!-- Navbar simplificada para público (não autenticado) -->
-      <nav class="bg-white shadow-md">
+      <!-- <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-3">
           <div class="flex justify-between items-center">
             <div class="text-primary font-bold text-2xl flex items-center">
@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-      </nav>
+      </nav> -->
   
       <!-- Hero section -->
       <div class="bg-gray-100 py-16">
@@ -158,7 +158,7 @@
       </div>
   
       <!-- Footer -->
-      <footer class="bg-gray-800 text-white py-12 mt-auto">
+      <!-- <footer class="bg-gray-800 text-white py-12 mt-auto">
         <div class="container mx-auto px-4">
           <div class="flex flex-col md:flex-row justify-between mb-8">
             <div class="mb-8 md:mb-0">
@@ -206,7 +206,7 @@
             </div>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </template>
   

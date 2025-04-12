@@ -20,7 +20,8 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Livro
               </th>
-              <th scope="col" v-if="showUserColumn" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <!-- Coluna de usuário - sempre visível para Admin -->
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Usuário
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -47,9 +48,11 @@
                   </div>
                 </div>
               </td>
-              <td v-if="showUserColumn" class="px-6 py-4 whitespace-nowrap">
+              <!-- Dados do usuário -->
+              <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">{{ reservation.nome_usuario }}</div>
                 <div v-if="reservation.tipo_usuario" class="text-sm text-gray-500">{{ reservation.tipo_usuario }}</div>
+                <div v-if="reservation.email_usuario" class="text-sm text-gray-500">{{ reservation.email_usuario }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">{{ formatDate(reservation.data_reserva, true) }}</div>
@@ -67,6 +70,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex space-x-3">
+                  <!-- Admin pode converter em empréstimo -->
                   <button 
                     v-if="reservation.status === 'Pendente' && isAdmin"
                     @click="$emit('convert', reservation)"
@@ -74,6 +78,8 @@
                   >
                     Converter em Empréstimo
                   </button>
+                  
+                  <!-- Opção de cancelar reserva - disponível para admin em qualquer reserva pendente -->
                   <button 
                     v-if="reservation.status === 'Pendente'"
                     @click="$emit('cancel', reservation)"
@@ -81,6 +87,7 @@
                   >
                     Cancelar
                   </button>
+                  
                   <button 
                     @click="$emit('view', reservation)"
                     class="text-gray-600 hover:text-gray-900"
@@ -123,13 +130,38 @@
         </div>
       </div>
     </div>
+    
+    <!-- Modal de confirmação de cancelamento -->
+    <div v-if="showCancelModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold mb-4">Confirmar Cancelamento</h3>
+        <p>Você está prestes a cancelar a reserva do livro <span class="font-semibold">{{ selectedReservation?.titulo }}</span> 
+          feita por <span class="font-semibold">{{ selectedReservation?.nome_usuario }}</span>.</p>
+        <p class="text-sm text-gray-500 mt-2">Esta ação não pode ser desfeita.</p>
+        
+        <div class="mt-6 flex justify-end space-x-3">
+          <button 
+            @click="closeCancelModal"
+            class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+          >
+            Voltar
+          </button>
+          <button 
+            @click="confirmCancel"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+          >
+            Confirmar Cancelamento
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue';
-import { formatDate } from '../utils/formatters';
-import { useAuthStore } from '../stores/auth';
+import { defineProps, defineEmits, computed, ref } from 'vue';
+import { formatDate } from '../../utils/formatters';
+import { useAuthStore } from '../../stores/auth';
 
 const props = defineProps({
   reservations: {
@@ -139,10 +171,6 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
-  },
-  showUserColumn: {
-    type: Boolean,
-    default: true
   },
   currentPage: {
     type: Number,
@@ -167,4 +195,27 @@ const emit = defineEmits(['cancel', 'convert', 'view', 'page-change']);
 // Verificar se o usuário é administrador
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.isAdmin);
+
+// Estado para modal de cancelamento
+const showCancelModal = ref(false);
+const selectedReservation = ref(null);
+
+// Métodos para manipular o modal de cancelamento
+const openCancelModal = (reservation) => {
+  selectedReservation.value = reservation;
+  showCancelModal.value = true;
+};
+
+const closeCancelModal = () => {
+  showCancelModal.value = false;
+  selectedReservation.value = null;
+};
+
+const confirmCancel = () => {
+  emit('cancel', selectedReservation.value);
+  closeCancelModal();
+};
+
+// Expor o método openCancelModal para o componente pai
+defineExpose({ openCancelModal });
 </script>

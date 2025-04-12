@@ -11,6 +11,13 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <!-- Credenciais temporárias (remover na versão final) -->
+        <div class="mb-6 p-4 bg-blue-50 text-blue-700 rounded-md text-sm">
+          <h3 class="font-semibold mb-2">Credenciais temporárias para teste:</h3>
+          <p><strong>Administrador:</strong> admin@bibliotech.com / admin123</p>
+          <p><strong>Usuário comum:</strong> user@bibliotech.com / user123</p>
+        </div>
+
         <form class="space-y-6" @submit.prevent="handleLogin">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
@@ -110,7 +117,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../stores/auth'; // Importação corrigida
+import { useAuthStore } from '../stores/auth';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -144,9 +151,6 @@ const validateForm = () => {
   if (!password.value) {
     errors.value.password = 'A senha é obrigatória';
     isValid = false;
-  } else if (password.value.length < 6) {
-    errors.value.password = 'A senha deve ter pelo menos 6 caracteres';
-    isValid = false;
   }
 
   return isValid;
@@ -165,7 +169,7 @@ const handleLogin = async () => {
     if (result.success) {
       router.push('/dashboard');
     } else {
-      errors.value.password = 'Credenciais inválidas';
+      errors.value.password = result.error || 'Credenciais inválidas';
     }
   } catch (error) {
     console.error('Erro ao realizar login:', error);

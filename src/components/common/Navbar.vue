@@ -3,10 +3,8 @@
     <div class="container mx-auto px-4 py-3">
       <div class="flex justify-between items-center">
         <!-- Logo e nome -->
-        <router-link to="/" class="flex items-center">
-          <div class="text-primary font-bold text-2xl flex items-center">
-            <span class="text-primary">BIBLIOTECH</span>
-          </div>
+        <router-link to="/dashboard" class="flex items-center">
+          <div class="text-primary font-bold text-2xl">BIBLIOTECH</div>
         </router-link>
 
         <!-- Links de navegação -->
@@ -64,7 +62,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../../stores/auth';  // Corrigido: caminho atualizado para ../../stores/auth
+import { useAuthStore } from '../../stores/auth';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -88,7 +86,7 @@ const toggleMobileMenu = () => {
 
 const logout = () => {
   authStore.logout();
-  router.push('/login');
+  router.push('/');
 };
 
 // Fechar dropdown quando clicar fora
