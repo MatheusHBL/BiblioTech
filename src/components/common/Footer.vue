@@ -29,14 +29,11 @@
       
       <div class="relative border-t border-gray-700 mt-6 pt-6 text-sm text-gray-400">
         <div class="flex justify-between items-center">
-          <!-- Espaço vazio para alinhar corretamente o texto central -->
           <div class="w-1/3"></div>
-          <!-- Texto centralizado -->
           <div class="absolute left-1/2 transform -translate-x-1/2">
             <p>&copy; {{ currentYear }} Bibliotech. Todos os direitos reservados.</p>
           </div>
-          <!-- Nome no canto direito -->
-          <div class="w-1/3 text-right text-gray-700">
+          <div class="w-1/3 text-right text-gray-800">
             <p>Matheus H. Barbosa L.</p>
             <p>Withor L. Barbosa L.</p>
           </div>
