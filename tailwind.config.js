@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#e77e6c', // Cor salmão/coral das imagens de referência
+        'primary': '#e77e6c', // Cor salmão/coral
         'secondary': '#333333',
         'accent': '#f97316',
         'light-bg': '#f8f9fa',
