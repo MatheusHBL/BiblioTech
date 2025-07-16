@@ -1,13 +1,12 @@
+
 <template>
   <nav class="bg-white shadow-md">
     <div class="container mx-auto px-4 py-3">
       <div class="flex justify-between items-center">
-        <!-- Logo e nome -->
         <router-link to="/" class="flex items-center">
           <div class="text-primary font-bold text-2xl">BIBLIOTECH</div>
         </router-link>
 
-        <!-- Botões de autenticação -->
         <div class="flex items-center space-x-4">
           <router-link to="/login" class="px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition-colors">
             Entrar
@@ -22,5 +21,4 @@
 </template>
 
 <script setup>
-// Sem lógica adicional necessária para navegação simples
 </script>

@@ -1,7 +1,7 @@
+
 <template>
   <div class="bg-white p-4 rounded-lg shadow-md">
     <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
-      <!-- Busca -->
       <div class="flex-1">
         <div class="relative">
           <input
@@ -19,7 +19,6 @@
         </div>
       </div>
       
-      <!-- Filtro de categoria (se disponível) -->
       <div v-if="showCategoryFilter" class="w-full md:w-48">
         <select 
           v-model="selectedCategoryValue"
@@ -33,7 +32,6 @@
         </select>
       </div>
       
-      <!-- Filtro de disponibilidade (se disponível) -->
       <div v-if="showAvailabilityFilter" class="w-full md:w-48">
         <select 
           v-model="availabilityValue"
@@ -46,7 +44,6 @@
         </select>
       </div>
       
-      <!-- Filtro de status (para empréstimos/reservas) -->
       <div v-if="showStatusFilter" class="w-full md:w-48">
         <select 
           v-model="statusValue"
@@ -60,7 +57,6 @@
         </select>
       </div>
       
-      <!-- Botão de busca (opcional em telas maiores) -->
       <button 
         v-if="showSearchButton"
         @click="handleSearch"
@@ -69,7 +65,6 @@
         Buscar
       </button>
       
-      <!-- Botão de limpar filtros -->
       <button 
         @click="clearFilters"
         class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
@@ -78,7 +73,6 @@
       </button>
     </div>
     
-    <!-- Filtros ativos (pills) -->
     <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mt-4">
       <div 
         v-if="searchValue" 
@@ -135,7 +129,6 @@
 import { ref, computed, watch, defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
-  // Props para busca
   initialSearch: {
     type: String,
     default: ''
@@ -145,7 +138,6 @@ const props = defineProps({
     default: 'Buscar por título, autor...'
   },
   
-  // Props para filtros
   showCategoryFilter: {
     type: Boolean,
     default: true
@@ -181,7 +173,6 @@ const props = defineProps({
     default: ''
   },
   
-  // Outros props
   showSearchButton: {
     type: Boolean,
     default: true
@@ -190,24 +181,20 @@ const props = defineProps({
 
 const emit = defineEmits(['search', 'filter-change', 'clear']);
 
-// Estado dos filtros
 const searchValue = ref(props.initialSearch);
 const selectedCategoryValue = ref(props.initialCategory);
 const availabilityValue = ref(props.initialAvailability);
 const statusValue = ref(props.initialStatus);
 
-// Computed properties
 const hasActiveFilters = computed(() => {
   return searchValue.value || selectedCategoryValue.value || availabilityValue.value || statusValue.value;
 });
 
-// Método para obter o label de um status pelo valor
 const getStatusLabel = (value) => {
   const statusOption = props.statusOptions.find(option => option.value === value);
   return statusOption ? statusOption.label : value;
 };
 
-// Métodos de ação
 const handleSearch = () => {
   emit('search', searchValue.value);
 };
@@ -249,7 +236,6 @@ const clearFilters = () => {
   emit('clear');
 };
 
-// Observar mudanças nas props
 watch(() => props.initialSearch, (newValue) => {
   searchValue.value = newValue;
 });

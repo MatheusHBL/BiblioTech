@@ -1,3 +1,4 @@
+
 <template>
   <form class="space-y-6" @submit.prevent="handleRegister">
     <div>
@@ -162,7 +163,6 @@ const emit = defineEmits(['register-success', 'register-error']);
 const authStore = useAuthStore();
 const { validateEmail, validatePassword, validateName, validatePhone } = useValidation();
 
-// Estado do formulário
 const name = ref('');
 const email = ref('');
 const phone = ref('');
@@ -182,7 +182,6 @@ const errors = ref({
   acceptTerms: ''
 });
 
-// Validação do formulário
 const validateForm = () => {
   let isValid = true;
   errors.value = {
@@ -239,7 +238,6 @@ const validateForm = () => {
   return isValid;
 };
 
-// Método para lidar com o registro
 const handleRegister = async () => {
   if (!validateForm()) return;
 
@@ -254,7 +252,6 @@ const handleRegister = async () => {
       endereco: address.value
     };
     
-    // Chama o método de registro na store de autenticação
     const result = await authStore.register(userData, password.value);
     
     if (result.success) {

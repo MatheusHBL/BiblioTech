@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#e77e6c', // Cor salmão/coral
+        'primary': '#e77e6c', 
         'secondary': '#333333',
         'accent': '#f97316',
         'light-bg': '#f8f9fa',

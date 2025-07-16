@@ -1,3 +1,4 @@
+
 <template>
     <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -11,10 +12,8 @@
   
       <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <!-- Formulário de registro -->
           <RegisterForm @register-success="handleRegisterSuccess" @register-error="handleRegisterError" />
   
-          <!-- Divisor -->
           <div class="mt-6">
             <div class="relative">
               <div class="absolute inset-0 flex items-center">
@@ -39,7 +38,6 @@
         </div>
       </div>
       
-      <!-- Alert de sucesso -->
       <div v-if="showSuccessAlert" class="fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end z-50">
         <div class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
           <div class="p-4">
@@ -76,11 +74,9 @@
   const router = useRouter();
   const showSuccessAlert = ref(false);
   
-  // Métodos para manipular os eventos do formulário
   const handleRegisterSuccess = () => {
     showSuccessAlert.value = true;
     
-    // Redireciona para login após alguns segundos
     setTimeout(() => {
       router.push('/login');
     }, 3000);
@@ -88,6 +84,5 @@
   
   const handleRegisterError = (error) => {
     console.error('Erro no registro:', error);
-    // Não precisa fazer nada aqui pois o formulário já mostra os erros
   };
   </script>

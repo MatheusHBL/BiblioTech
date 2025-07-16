@@ -1,17 +1,14 @@
+
 <template>
   <div class="container mx-auto px-4 py-8">
-    <!-- Cabeçalho -->
     <div class="mb-6">
       <h1 class="text-3xl font-bold text-gray-800">Meu Perfil</h1>
       <p class="text-gray-600 mt-2">Gerencie suas informações pessoais e preferências</p>
     </div>
     
-    <!-- Conteúdo principal -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Sidebar / Menu lateral -->
       <div class="md:col-span-1">
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
-          <!-- Informações do usuário -->
           <div class="p-6 border-b border-gray-200">
             <div class="flex items-center">
               <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-xl font-bold">
@@ -27,7 +24,6 @@
             </div>
           </div>
           
-          <!-- Menu de navegação -->
           <nav class="p-4">
             <ul class="space-y-2">
               <li>
@@ -100,15 +96,12 @@
         </div>
       </div>
 
-      <!-- Conteúdo principal -->
       <div class="md:col-span-2">
         <div class="bg-white rounded-lg shadow-md overflow-hidden p-6">
-          <!-- Informações pessoais -->
           <div v-if="activeTab === 'personal'">
             <h2 class="text-xl font-semibold mb-6">Informações Pessoais</h2>
             
             <form @submit.prevent="updateProfile" class="space-y-6">
-              <!-- Nome -->
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
                 <input 
@@ -119,7 +112,6 @@
                 />
               </div>
               
-              <!-- Email -->
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                 <input 
@@ -130,7 +122,6 @@
                 />
               </div>
               
-              <!-- Telefone -->
               <div>
                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
                 <input 
@@ -141,7 +132,6 @@
                 />
               </div>
               
-              <!-- Endereço -->
               <div>
                 <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
                 <textarea 
@@ -152,7 +142,6 @@
                 ></textarea>
               </div>
               
-              <!-- Botão de salvar -->
               <div>
                 <button 
                   type="submit"
@@ -164,7 +153,6 @@
             </form>
           </div>
           
-          <!-- Histórico de atividades -->
           <div v-if="activeTab === 'activity'">
             <h2 class="text-xl font-semibold mb-6">Histórico de Atividades</h2>
             
@@ -205,12 +193,10 @@
             </div>
           </div>
           
-          <!-- Segurança -->
           <div v-if="activeTab === 'security'">
             <h2 class="text-xl font-semibold mb-6">Segurança</h2>
             
             <form @submit.prevent="updatePassword" class="space-y-6">
-              <!-- Senha atual -->
               <div>
                 <label for="current-password" class="block text-sm font-medium text-gray-700 mb-1">Senha Atual</label>
                 <input 
@@ -221,7 +207,6 @@
                 />
               </div>
               
-              <!-- Nova senha -->
               <div>
                 <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">Nova Senha</label>
                 <input 
@@ -232,7 +217,6 @@
                 />
               </div>
               
-              <!-- Confirmar nova senha -->
               <div>
                 <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Nova Senha</label>
                 <input 
@@ -243,7 +227,6 @@
                 />
               </div>
               
-              <!-- Botão de alterar senha -->
               <div>
                 <button 
                   type="submit"
@@ -274,12 +257,10 @@
             </div>
           </div>
           
-          <!-- Preferências -->
           <div v-if="activeTab === 'preferences'">
             <h2 class="text-xl font-semibold mb-6">Preferências</h2>
             
             <div class="space-y-6">
-              <!-- Notificações -->
               <div>
                 <h3 class="text-lg font-medium mb-4">Notificações</h3>
                 
@@ -308,7 +289,6 @@
                 </div>
               </div>
               
-              <!-- Temas -->
               <div>
                 <h3 class="text-lg font-medium mb-4">Aparência</h3>
                 
@@ -342,7 +322,6 @@
                 </div>
               </div>
               
-              <!-- Idioma -->
               <div>
                 <h3 class="text-lg font-medium mb-4">Idioma</h3>
                 
@@ -356,7 +335,6 @@
                 </select>
               </div>
               
-              <!-- Botão de salvar -->
               <div>
                 <button 
                   @click="savePreferences"
@@ -371,7 +349,6 @@
       </div>
     </div>
     
-    <!-- Alert de sucesso -->
     <div v-if="showAlert" class="fixed inset-x-0 bottom-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end z-50">
       <div class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
         <div class="p-4">
@@ -408,7 +385,6 @@ const activeTab = ref('personal');
 const showAlert = ref(false);
 const alertMessage = ref('');
 
-// Dados do usuário mockados (em um projeto real, estes viriam da loja (store) de autenticação)
 const user = ref({
   id_usuario: 1,
   nome: 'Matheus Henrique Barbosa de Lima',
@@ -418,7 +394,6 @@ const user = ref({
   tipo_usuario: 'Estudante'
 });
 
-// Formulário de informações pessoais
 const formData = ref({
   nome: user.value.nome,
   email: user.value.email,
@@ -426,14 +401,12 @@ const formData = ref({
   endereco: user.value.endereco
 });
 
-// Formulário de alteração de senha
 const passwordData = ref({
   currentPassword: '',
   newPassword: '',
   confirmPassword: ''
 });
 
-// Preferências do usuário
 const preferences = ref({
   emailNotifications: true,
   returnReminders: true,
@@ -441,7 +414,6 @@ const preferences = ref({
   language: 'pt-BR'
 });
 
-// Histórico de atividades (mockado)
 const activities = ref([
   {
     type: 'reservation',
@@ -463,7 +435,6 @@ const activities = ref([
   }
 ]);
 
-// Computed para obter as iniciais do nome do usuário para o avatar
 const userInitials = computed(() => {
   if (!user.value.nome) return '';
   
@@ -473,13 +444,8 @@ const userInitials = computed(() => {
   return (names[0][0] + names[names.length - 1][0]).toUpperCase();
 });
 
-// Métodos
 const updateProfile = async () => {
   try {
-    // Em um projeto real, aqui você chamaria a API para atualizar os dados
-    // await authService.updateProfile(formData.value);
-    
-    // Simulação de atualização bem-sucedida
     user.value = { ...user.value, ...formData.value };
     
     showSuccessAlert('Informações pessoais atualizadas com sucesso');
@@ -489,18 +455,12 @@ const updateProfile = async () => {
 };
 
 const updatePassword = async () => {
-  // Validar se as senhas coincidem
   if (passwordData.value.newPassword !== passwordData.value.confirmPassword) {
-    // Em um projeto real, você mostraria um erro
     console.error('As senhas não coincidem');
     return;
   }
   
   try {
-    // Em um projeto real, aqui você chamaria a API para atualizar a senha
-    // await authService.updatePassword(passwordData.value);
-    
-    // Limpar formulário
     passwordData.value = {
       currentPassword: '',
       newPassword: '',
@@ -515,9 +475,6 @@ const updatePassword = async () => {
 
 const savePreferences = async () => {
   try {
-    // Em um projeto real, aqui você chamaria a API para salvar as preferências
-    // await userService.savePreferences(preferences.value);
-    
     showSuccessAlert('Preferências salvas com sucesso');
   } catch (error) {
     console.error('Erro ao salvar preferências:', error);
@@ -528,19 +485,12 @@ const showSuccessAlert = (message) => {
   alertMessage.value = message;
   showAlert.value = true;
   
-  // Esconder o alerta após 5 segundos
   setTimeout(() => {
     showAlert.value = false;
   }, 5000);
 };
 
-// Carregar dados iniciais
 onMounted(async () => {
-  // Em um projeto real, aqui você carregaria os dados do usuário e preferências
-  // const userData = await authService.getUserProfile();
-  // user.value = userData;
-  
-  // Preencher formulário com dados do usuário
   formData.value = {
     nome: user.value.nome,
     email: user.value.email,

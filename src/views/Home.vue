@@ -1,26 +1,7 @@
+
 <template>
     <div class="min-h-screen flex flex-col">
-      <!-- Navbar simplificada para público (não autenticado) -->
-      <!-- <nav class="bg-white shadow-md">
-        <div class="container mx-auto px-4 py-3">
-          <div class="flex justify-between items-center">
-            <div class="text-primary font-bold text-2xl flex items-center">
-              <span class="text-primary">BIBLIOTECH</span>
-            </div>
-  
-            <div class="flex space-x-4">
-              <router-link to="/login" class="px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition-colors">
-                Entrar
-              </router-link>
-              <router-link to="/register" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
-                Criar Conta
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </nav> -->
-  
-      <!-- Hero section -->
+      
       <div class="bg-gray-100 py-16">
         <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between">
           <div class="lg:w-1/2 mb-10 lg:mb-0">
@@ -40,7 +21,6 @@
             </div>
           </div>
           
-          <!-- Placeholder para imagem -->
           <div class="lg:w-1/2 flex justify-center">
             <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
               <div class="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-400">
@@ -51,7 +31,6 @@
         </div>
       </div>
   
-      <!-- Features section -->
       <div class="py-16">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl font-bold text-center mb-12">Funcionalidades Principais</h2>
@@ -96,7 +75,6 @@
         </div>
       </div>
   
-      <!-- Testimonials section -->
       <div class="bg-gray-100 py-16">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl font-bold text-center mb-12">O Que Nossos Usuários Dizem</h2>
@@ -144,7 +122,6 @@
         </div>
       </div>
   
-      <!-- CTA section -->
       <div class="py-16">
         <div class="container mx-auto px-4 text-center">
           <h2 class="text-3xl font-bold mb-6">Pronto para começar?</h2>
@@ -157,59 +134,8 @@
         </div>
       </div>
   
-      <!-- Footer -->
-      <!-- <footer class="bg-gray-800 text-white py-12 mt-auto">
-        <div class="container mx-auto px-4">
-          <div class="flex flex-col md:flex-row justify-between mb-8">
-            <div class="mb-8 md:mb-0">
-              <div class="font-bold text-2xl text-primary mb-4">BIBLIOTECH</div>
-              <p class="text-gray-400 max-w-xs">
-                Sistema completo para gerenciamento de bibliotecas, desenvolvido com foco em usabilidade e eficiência.
-              </p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-              <div>
-                <h4 class="font-semibold text-lg mb-4">Produto</h4>
-                <ul class="space-y-2">
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Recursos</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Preços</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Demonstração</a></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 class="font-semibold text-lg mb-4">Suporte</h4>
-                <ul class="space-y-2">
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Documentação</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Tutoriais</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">FAQ</a></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 class="font-semibold text-lg mb-4">Contato</h4>
-                <ul class="space-y-2">
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Email</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Telefone</a></li>
-                  <li><a href="#" class="text-gray-400 hover:text-primary">Endereço</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div class="pt-8 border-t border-gray-700 text-center md:flex md:justify-between md:text-left">
-            <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 Bibliotech. Todos os direitos reservados.</p>
-            <div class="flex justify-center md:justify-end space-x-6">
-              <a href="#" class="text-gray-400 hover:text-primary">Termos de Serviço</a>
-              <a href="#" class="text-gray-400 hover:text-primary">Política de Privacidade</a>
-            </div>
-          </div>
-        </div>
-      </footer> -->
     </div>
   </template>
   
   <script setup>
-  // Sem lógica adicional necessária para a página inicial
   </script>

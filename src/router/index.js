@@ -1,7 +1,7 @@
+
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
-// Importação de views
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
@@ -71,7 +71,6 @@ const router = createRouter({
   routes
 });
 
-// Proteção de rotas 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   

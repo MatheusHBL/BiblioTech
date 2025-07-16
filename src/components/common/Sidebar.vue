@@ -1,3 +1,4 @@
+
 <template>
   <div
     class="bg-white shadow-md overflow-hidden transition-all duration-300"
@@ -7,11 +8,9 @@
       'translate-x-0': isOpen
     }"
   >
-    <!-- Logo e cabeçalho -->
     <div class="p-6 border-b border-gray-200">
       <div class="flex items-center justify-between">
         <div class="text-primary font-bold text-xl">BIBLIOTECH</div>
-        <!-- Botão de fechar em telas menores -->
         <button 
           @click="toggleSidebar"
           class="text-gray-500 hover:text-gray-700 md:hidden focus:outline-none"
@@ -23,7 +22,6 @@
       </div>
     </div>
     
-    <!-- Perfil do usuário -->
     <div class="p-4 border-b border-gray-200">
       <div class="flex items-center">
         <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-sm font-bold">
@@ -36,7 +34,6 @@
       </div>
     </div>
     
-    <!-- Menu de navegação -->
     <nav class="p-4">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Menu</p>
       <ul class="space-y-1">
@@ -134,7 +131,6 @@
     </nav>
   </div>
   
-  <!-- Overlay para telas menores -->
   <div 
     v-if="isOpen" 
     class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
@@ -160,7 +156,6 @@ const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Computed properties para dados do usuário
 const userName = computed(() => authStore.userName || 'Usuário');
 const userType = computed(() => {
   const type = authStore.user?.tipo_usuario;
@@ -172,7 +167,6 @@ const userType = computed(() => {
 
 const isAdmin = computed(() => authStore.isAdmin);
 
-// Iniciais do usuário para o avatar
 const userInitials = computed(() => {
   if (!userName.value) return '';
   
@@ -182,12 +176,10 @@ const userInitials = computed(() => {
   return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 });
 
-// Verifica se a rota atual está ativa
 const isActive = (path) => {
   return route.path.startsWith(path);
 };
 
-// Métodos
 const toggleSidebar = () => {
   emit('toggle');
 };

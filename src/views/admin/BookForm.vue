@@ -1,3 +1,4 @@
+
 <template>
     <div class="container mx-auto px-4 py-8">
       <div class="mb-6 flex justify-between items-center">
@@ -11,7 +12,6 @@
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-6">
-              <!-- Título -->
               <div>
                 <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
                 <input
@@ -24,7 +24,6 @@
                 <p v-if="errors.titulo" class="mt-1 text-sm text-red-600">{{ errors.titulo }}</p>
               </div>
   
-              <!-- ISBN -->
               <div>
                 <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
                 <input
@@ -37,7 +36,6 @@
                 <p v-if="errors.isbn" class="mt-1 text-sm text-red-600">{{ errors.isbn }}</p>
               </div>
   
-              <!-- Ano de Publicação -->
               <div>
                 <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Ano de Publicação</label>
                 <input
@@ -52,7 +50,6 @@
                 <p v-if="errors.ano_publicacao" class="mt-1 text-sm text-red-600">{{ errors.ano_publicacao }}</p>
               </div>
   
-              <!-- Quantidade Disponível -->
               <div>
                 <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantidade Disponível</label>
                 <input
@@ -65,7 +62,6 @@
                 />
               </div>
   
-              <!-- Editora -->
               <div>
                 <label for="publisher" class="block text-sm font-medium text-gray-700 mb-1">Editora</label>
                 <select
@@ -83,7 +79,6 @@
             </div>
   
             <div class="space-y-6">
-              <!-- Imagem do Livro -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Imagem da Capa</label>
                 <div class="mt-1 flex flex-col items-center space-y-4">
@@ -123,7 +118,6 @@
                 </div>
               </div>
   
-              <!-- Autores (múltiplos) -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Autores</label>
                 <div class="space-y-2">
@@ -157,7 +151,6 @@
                 </div>
               </div>
   
-              <!-- Categorias (múltiplas) -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Categorias</label>
                 <div class="space-y-2">
@@ -193,7 +186,6 @@
             </div>
           </div>
   
-          <!-- Descrição (opcional) -->
           <div>
             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição (opcional)</label>
             <textarea
@@ -204,7 +196,6 @@
             ></textarea>
           </div>
   
-          <!-- Botões de ação -->
           <div class="flex justify-end space-x-3">
             <button
               type="button"
@@ -241,7 +232,6 @@
   const imagePreview = ref(null);
   const imageFile = ref(null);
   
-  // Dados mockados para categorias, autores e editoras
   const categorias = ref([
     { id_categoria: 1, descricao: 'Aventura' },
     { id_categoria: 2, descricao: 'Biografia' },
@@ -266,7 +256,6 @@
     { id_editora: 5, nome: 'Editora Aleph' },
   ]);
   
-  // Estado inicial do formulário
   const formData = ref({
     titulo: '',
     isbn: '',
@@ -278,14 +267,12 @@
     descricao: ''
   });
   
-  // Estado de erros
   const errors = ref({
     titulo: '',
     isbn: '',
     ano_publicacao: '',
   });
   
-  // Métodos para gerenciar autores e categorias
   const addAutor = () => {
     formData.value.autores.push('');
   };
@@ -306,24 +293,20 @@
     }
   };
   
-  // Manipulador de upload de imagem
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
     
-    // Verificar tipo de arquivo
     if (!file.type.match('image.*')) {
       alert('Por favor, selecione uma imagem válida.');
       return;
     }
     
-    // Verificar tamanho (5MB)
     if (file.size > 5 * 1024 * 1024) {
       alert('A imagem deve ter menos de 5MB.');
       return;
     }
     
-    // Atualizar preview e armazenar arquivo
     imageFile.value = file;
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -340,7 +323,6 @@
     }
   };
   
-  // Validação do formulário
   const validateForm = () => {
     let isValid = true;
     errors.value = {
@@ -349,20 +331,17 @@
       ano_publicacao: '',
     };
   
-    // Validação do título
     if (!formData.value.titulo.trim()) {
       errors.value.titulo = 'O título é obrigatório';
       isValid = false;
     }
   
-    // Validação do ISBN
     const isbnError = validateISBN(formData.value.isbn);
     if (isbnError) {
       errors.value.isbn = isbnError;
       isValid = false;
     }
   
-    // Validação do ano
     const currentYear = new Date().getFullYear();
     if (formData.value.ano_publicacao < 1000 || formData.value.ano_publicacao > currentYear) {
       errors.value.ano_publicacao = `O ano deve estar entre 1000 e ${currentYear}`;
@@ -372,12 +351,9 @@
     return isValid;
   };
   
-  // Carregar dados para edição
   const loadBookData = async () => {
     if (isEdit.value && bookId.value) {
       try {
-        // Em um projeto real, aqui você faria uma chamada API para buscar os dados do livro
-        // Por enquanto, simulamos com dados mockados
         const mockBook = {
           id_livro: parseInt(bookId.value),
           titulo: 'O Senhor dos Anéis',
@@ -401,7 +377,6 @@
           categorias: mockBook.categorias
         };
   
-        // Simular uma imagem existente
         imagePreview.value = 'https://via.placeholder.com/500x750?text=Cover+Image';
       } catch (error) {
         console.error('Erro ao carregar dados do livro:', error);
@@ -410,19 +385,14 @@
     }
   };
   
-  // Método para enviar o formulário
   const handleSubmit = async () => {
     if (!validateForm()) return;
   
     try {
       isSubmitting.value = true;
   
-      // Em um projeto real, aqui você faria uma chamada API para salvar/atualizar o livro
-      // incluindo o upload da imagem se houver
-      // Por enquanto, apenas simulamos o sucesso da operação
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simula um atraso de rede
+      await new Promise(resolve => setTimeout(resolve, 1000)); 
   
-      // Simula um sucesso
       alert(`Livro ${isEdit.value ? 'atualizado' : 'cadastrado'} com sucesso!`);
       router.push('/admin/books');
     } catch (error) {
@@ -433,6 +403,5 @@
     }
   };
   
-  // Carregar dados ao montar o componente
   onMounted(loadBookData);
   </script>

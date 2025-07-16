@@ -1,3 +1,4 @@
+
 <template>
   <form class="space-y-6" @submit.prevent="handleLogin">
     <div>
@@ -79,7 +80,6 @@ const emit = defineEmits(['login-success', 'login-error']);
 const authStore = useAuthStore();
 const { validateEmail, validatePassword } = useValidation();
 
-// Estado do formulário
 const email = ref('');
 const password = ref('');
 const rememberMe = ref(false);
@@ -89,7 +89,6 @@ const errors = ref({
   password: ''
 });
 
-// Validação do formulário
 const validateForm = () => {
   let isValid = true;
   errors.value = {
@@ -112,14 +111,12 @@ const validateForm = () => {
   return isValid;
 };
 
-// Método para lidar com o login
 const handleLogin = async () => {
   if (!validateForm()) return;
 
   try {
     isLoading.value = true;
     
-    // Chama o método de login na store de autenticação
     const result = await authStore.login(email.value, password.value, rememberMe.value);
     
     if (result.success) {

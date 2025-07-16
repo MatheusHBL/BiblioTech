@@ -1,20 +1,17 @@
+
 import { defineStore } from 'pinia';
 import { ref, computed, watch, onUnmounted } from 'vue';
 
 export const useThemeStore = defineStore('theme', () => {
-  // Constantes
   const THEME_STORAGE_KEY = 'theme';
   const THEMES = { DARK: 'dark', LIGHT: 'light', SYSTEM: 'system' };
   const THEME_CLASSES = [THEMES.DARK, THEMES.LIGHT];
   
-  // Estado
   const theme = ref(getInitialTheme());
   const isDark = computed(() => theme.value === THEMES.DARK);
   
-  // Inicialização
   watch(theme, applyTheme, { immediate: true });
   
-  // Funções principais
   function getInitialTheme() {
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
     if (savedTheme) return savedTheme;
@@ -45,19 +42,15 @@ export const useThemeStore = defineStore('theme', () => {
   function applyTheme() {
     const currentTheme = theme.value;
     
-    // Atualizar classes do HTML
     document.documentElement.classList.remove(...THEME_CLASSES);
     document.documentElement.classList.add(currentTheme);
     
-    // Atualizar estilos do body
     const isDarkMode = currentTheme === THEMES.DARK;
     document.body.style.backgroundColor = isDarkMode ? '#121212' : '#f8f9fa';
     document.body.style.color = isDarkMode ? '#e0e0e0' : '#333333';
     
-    // Alternar classe dark-theme no body
     document.body.classList.toggle('dark-theme', isDarkMode);
     
-    // Gerenciar contêineres
     const containers = document.querySelectorAll('.bg-light-bg, .min-h-screen');
     containers.forEach(container => {
       container.classList.toggle('dark-mode-forced', isDarkMode);
@@ -73,14 +66,12 @@ export const useThemeStore = defineStore('theme', () => {
       }
     };
     
-    // Usar API moderna, com fallback para legada
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', handleChange);
     } else if (mediaQuery.addListener) {
       mediaQuery.addListener(handleChange);
     }
     
-    // Limpar evento quando o componente for desmontado
     onUnmounted(() => {
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener('change', handleChange);

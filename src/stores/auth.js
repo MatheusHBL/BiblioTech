@@ -1,3 +1,4 @@
+
 import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
@@ -28,22 +29,18 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('token');
     },
     
-    // Métodos de acesso temporários até a implementação da API
     async login(email, password) {
       try {
-        // Credenciais para admin (pode personalizar como desejar)
         const adminCredentials = {
           email: 'admin@bibliotech.com',
           password: 'admin123'
         };
         
-        // Credenciais para usuário comum (pode personalizar como desejar)
         const userCredentials = {
           email: 'user@bibliotech.com',
           password: 'user123'
         };
         
-        // Verifica se as credenciais correspondem ao administrador
         if (email === adminCredentials.email && password === adminCredentials.password) {
           const adminUser = {
             id_usuario: 1,
@@ -59,7 +56,6 @@ export const useAuthStore = defineStore('auth', {
           return { success: true, isAdmin: true };
         }
         
-        // Verifica se as credenciais correspondem ao usuário comum
         else if (email === userCredentials.email && password === userCredentials.password) {
           const regularUser = {
             id_usuario: 2,
@@ -75,7 +71,6 @@ export const useAuthStore = defineStore('auth', {
           return { success: true, isAdmin: false };
         }
         
-        // Credenciais inválidas
         else {
           return { success: false, error: 'Credenciais inválidas' };
         }
@@ -86,7 +81,6 @@ export const useAuthStore = defineStore('auth', {
     
     async register(userData) {
       try {
-        // Simulação de registro - será substituído pela chamada API
         alert('Registro simulado com sucesso! Por favor, faça login com as credenciais pré-definidas.');
         return { success: true };
       } catch (error) {

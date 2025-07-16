@@ -1,16 +1,15 @@
+
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import loanService from '../services/loanService';
 
 export const useLoanStore = defineStore('loans', () => {
-  // Estado
   const loans = ref([]);
   const userLoans = ref([]);
   const currentLoan = ref(null);
   const loading = ref(false);
   const error = ref(null);
   
-  // Getters
   const activeLoans = computed(() => loans.value.filter(loan => loan.status === 'Ativo'));
   const overdueLoans = computed(() => loans.value.filter(loan => loan.status === 'Atrasado'));
   const returnedLoans = computed(() => loans.value.filter(loan => loan.status === 'Devolvido'));
@@ -22,7 +21,6 @@ export const useLoanStore = defineStore('loans', () => {
     return (id) => loans.value.find(loan => loan.id_emprestimo === parseInt(id));
   });
   
-  // Ações
   async function fetchAllLoans(params = {}) {
     try {
       loading.value = true;
@@ -81,7 +79,6 @@ export const useLoanStore = defineStore('loans', () => {
       
       const data = await loanService.createLoan(loanData);
       
-      // Adiciona o novo empréstimo à lista se a requisição for bem-sucedida
       loans.value.unshift(data.loan);
       
       loading.value = false;
@@ -100,19 +97,16 @@ export const useLoanStore = defineStore('loans', () => {
       
       const data = await loanService.returnBook(id);
       
-      // Atualiza o empréstimo na lista
       const index = loans.value.findIndex(loan => loan.id_emprestimo === parseInt(id));
       if (index !== -1) {
         loans.value[index] = data.loan;
       }
       
-      // Atualiza também na lista de empréstimos do usuário se necessário
       const userIndex = userLoans.value.findIndex(loan => loan.id_emprestimo === parseInt(id));
       if (userIndex !== -1) {
         userLoans.value[userIndex] = data.loan;
       }
       
-      // Atualiza o empréstimo atual se estiver visualizando
       if (currentLoan.value && currentLoan.value.id_emprestimo === parseInt(id)) {
         currentLoan.value = data.loan;
       }
@@ -133,13 +127,11 @@ export const useLoanStore = defineStore('loans', () => {
       
       const data = await loanService.updateLoanStatus(id, status);
       
-      // Atualiza o empréstimo na lista
       const index = loans.value.findIndex(loan => loan.id_emprestimo === parseInt(id));
       if (index !== -1) {
         loans.value[index] = data.loan;
       }
       
-      // Atualiza o empréstimo atual se estiver visualizando
       if (currentLoan.value && currentLoan.value.id_emprestimo === parseInt(id)) {
         currentLoan.value = data.loan;
       }
@@ -160,19 +152,16 @@ export const useLoanStore = defineStore('loans', () => {
       
       const data = await loanService.extendLoan(id, newReturnDate);
       
-      // Atualiza o empréstimo na lista
       const index = loans.value.findIndex(loan => loan.id_emprestimo === parseInt(id));
       if (index !== -1) {
         loans.value[index] = data.loan;
       }
       
-      // Atualiza também na lista de empréstimos do usuário se necessário
       const userIndex = userLoans.value.findIndex(loan => loan.id_emprestimo === parseInt(id));
       if (userIndex !== -1) {
         userLoans.value[userIndex] = data.loan;
       }
       
-      // Atualiza o empréstimo atual se estiver visualizando
       if (currentLoan.value && currentLoan.value.id_emprestimo === parseInt(id)) {
         currentLoan.value = data.loan;
       }
@@ -202,7 +191,6 @@ export const useLoanStore = defineStore('loans', () => {
     }
   }
   
-  // Mock de dados para desenvolvimento sem API
   function initMockData() {
     loans.value = [
       {

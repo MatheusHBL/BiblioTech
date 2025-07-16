@@ -1,6 +1,6 @@
+
 <template>
     <div class="container mx-auto px-4 py-8">
-      <!-- Navegação de volta -->
       <div class="mb-6">
         <router-link to="/books" class="flex items-center text-primary hover:underline">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -10,28 +10,22 @@
         </router-link>
       </div>
       
-      <!-- Loading state -->
       <div v-if="loading" class="flex justify-center my-12">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
       
-      <!-- Erro -->
       <div v-else-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6">
         <p>{{ error }}</p>
       </div>
       
-      <!-- Conteúdo principal -->
       <div v-else-if="book" class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="md:flex">
-          <!-- Imagem do livro -->
           <div class="md:w-1/3 bg-gray-200">
-            <!-- Placeholder para imagem -->
             <div class="h-full w-full bg-gray-300 flex items-center justify-center text-gray-500 min-h-80">
               <span class="text-sm">Imagem do Livro</span>
             </div>
           </div>
           
-          <!-- Detalhes do livro -->
           <div class="md:w-2/3 p-6">
             <div class="mb-6">
               <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ book.titulo }}</h1>
@@ -62,7 +56,6 @@
               </div>
             </div>
             
-            <!-- Descrição (mockada, pois não temos essa informação no banco de dados) -->
             <div class="mb-6">
               <h2 class="text-xl font-semibold mb-2">Descrição</h2>
               <p class="text-gray-700">
@@ -72,7 +65,6 @@
               </p>
             </div>
             
-            <!-- Ações -->
             <div class="flex space-x-4">
               <button 
                 v-if="book.quantidade_disponivel > 0"
@@ -92,12 +84,10 @@
           </div>
         </div>
         
-        <!-- Informações adicionais -->
         <div class="p-6 border-t border-gray-200">
           <h2 class="text-xl font-semibold mb-4">Informações Adicionais</h2>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Status de empréstimos -->
             <div>
               <h3 class="text-lg font-medium mb-2">Status de Disponibilidade</h3>
               <div class="bg-gray-100 p-4 rounded-md">
@@ -111,7 +101,6 @@
               </div>
             </div>
             
-            <!-- Localização na biblioteca -->
             <div>
               <h3 class="text-lg font-medium mb-2">Localização</h3>
               <div class="bg-gray-100 p-4 rounded-md">
@@ -125,7 +114,6 @@
           </div>
         </div>
         
-        <!-- Livros relacionados (opcional) -->
         <div class="p-6 border-t border-gray-200">
           <h2 class="text-xl font-semibold mb-4">Você também pode gostar</h2>
           
@@ -141,7 +129,6 @@
         </div>
       </div>
       
-      <!-- Livro não encontrado -->
       <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Livro não encontrado</h2>
         <p class="text-gray-600 mb-6">O livro que você está procurando não existe ou foi removido.</p>
@@ -150,7 +137,6 @@
         </router-link>
       </div>
       
-      <!-- Modal de reserva (simplificado) -->
       <div v-if="showReserveModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
           <h3 class="text-lg font-semibold mb-4">Confirmar Reserva</h3>
@@ -184,32 +170,26 @@
   const router = useRouter();
   const bookStore = useBookStore();
   
-  // Estado
   const loading = ref(true);
   const error = ref(null);
   const showReserveModal = ref(false);
   
-  // Dados do livro
   const bookId = computed(() => route.params.id);
   const book = computed(() => bookStore.getBookById(bookId.value));
   
-  // Livros relacionados (simulação)
   const relatedBooks = ref([]);
   
-  // Carregar os dados do livro
   const loadBookData = async () => {
     try {
       loading.value = true;
       error.value = null;
       
-      // Carrega o livro específico
       const result = await bookStore.fetchBookById(bookId.value);
       
       if (!result.success) {
         error.value = 'Erro ao carregar dados do livro.';
       }
       
-      // Simula livros relacionados (mesma categoria)
       if (book.value) {
         const sameCategoryBooks = bookStore.getBooksByCategory(book.value.categoria)
           .filter(b => b.id_livro !== parseInt(bookId.value))
@@ -225,20 +205,16 @@
     }
   };
   
-  // Métodos para reserva
   const handleReserve = () => {
     showReserveModal.value = true;
   };
   
   const confirmReservation = () => {
-    // Aqui seria a chamada para a API para criar a reserva
-    // Por enquanto, apenas simulamos com um alerta
     alert(`Reserva confirmada para o livro "${book.value.titulo}"`);
     showReserveModal.value = false;
     router.push('/reservations');
   };
   
-  // Carregar dados quando o componente é montado
   onMounted(() => {
     loadBookData();
   });

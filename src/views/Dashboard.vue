@@ -1,12 +1,11 @@
+
 <template>
   <div class="container mx-auto px-4 py-8">
-    <!-- Cabeçalho -->
     <div class="mb-10">
       <h1 class="text-3xl font-bold text-gray-800">Bem-vindo, {{ userName }}!</h1>
       <p class="text-gray-600 mt-2">Confira as novidades e atividades na sua conta.</p>
     </div>
 
-    <!-- Seção de Estatísticas -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Livros Disponíveis</h3>
@@ -27,7 +26,6 @@
       </div>
     </div>
 
-    <!-- Seção de Livros em Destaque -->
     <div class="mb-10">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Livros em Destaque</h2>
@@ -39,7 +37,6 @@
       </div>
     </div>
 
-    <!-- Últimas Atividades -->
     <div class="mb-10">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Últimas Atividades</h2>
       
@@ -52,7 +49,6 @@
           <li v-for="(activity, index) in activities" :key="index" class="p-4 hover:bg-gray-50">
             <div class="flex items-start">
               <div class="flex-shrink-0 mt-1">
-                <!-- Ícones conforme o tipo de atividade -->
                 <div v-if="activity.type === 'reservation'" class="p-2 bg-blue-100 text-blue-500 rounded-full">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -83,7 +79,6 @@
       </div>
     </div>
 
-    <!-- Próximas Devoluções (se aplicável) -->
     <div v-if="upcomingReturns.length > 0">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Próximas Devoluções</h2>
       
@@ -118,20 +113,16 @@ import TrendingBooks from '../components/books/TrendingBooks.vue';
 const authStore = useAuthStore();
 const bookStore = useBookStore();
 
-// Dados do usuário
 const userName = computed(() => authStore.userName);
 
-// Dados mockados para desenvolvimento
 const stats = ref({
   availableBooks: 42,
   userReservations: 2,
   userLoans: 1
 });
 
-// Livros em destaque
 const trendingBooks = computed(() => bookStore.trendingBooks);
 
-// Atividades recentes
 const activities = ref([
   {
     type: 'reservation',
@@ -153,7 +144,6 @@ const activities = ref([
   }
 ]);
 
-// Próximas devoluções
 const upcomingReturns = ref([
   {
     title: 'The Hunter House',
@@ -162,7 +152,6 @@ const upcomingReturns = ref([
   }
 ]);
 
-// Carrega os dados quando o componente é montado
 onMounted(async () => {
   await bookStore.fetchBooks();
 });

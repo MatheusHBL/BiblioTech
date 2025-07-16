@@ -1,3 +1,4 @@
+
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -11,7 +12,6 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <!-- Credenciais temporárias (remover na versão final) -->
         <div class="mb-6 p-4 bg-blue-50 text-blue-700 rounded-md text-sm">
           <h3 class="font-semibold mb-2">Credenciais temporárias para teste:</h3>
           <p><strong>Administrador:</strong> admin@bibliotech.com / admin123</p>
@@ -122,7 +122,6 @@ import { useAuthStore } from '../stores/auth';
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Estado do formulário
 const email = ref('');
 const password = ref('');
 const rememberMe = ref(false);
@@ -132,7 +131,6 @@ const errors = ref({
   password: ''
 });
 
-// Validação do formulário
 const validateForm = () => {
   let isValid = true;
   errors.value = {
@@ -156,14 +154,12 @@ const validateForm = () => {
   return isValid;
 };
 
-// Método para lidar com o login
 const handleLogin = async () => {
   if (!validateForm()) return;
 
   try {
     isLoading.value = true;
     
-    // Chama o método de login na store de autenticação
     const result = await authStore.login(email.value, password.value);
     
     if (result.success) {

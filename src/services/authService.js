@@ -1,12 +1,7 @@
+
 import api from './api';
 
 export const authService = {
-  /**
-   * Realiza o login do usuário
-   * @param {string} email - Email do usuário
-   * @param {string} password - Senha do usuário
-   * @returns {Promise} Promessa com os dados do usuário e token
-   */
   async login(email, password) {
     try {
       const response = await api.post('/auth/login', { email, password });
@@ -16,12 +11,6 @@ export const authService = {
     }
   },
 
-  /**
-   * Registra um novo usuário
-   * @param {Object} userData - Dados do usuário
-   * @param {string} password - Senha do usuário
-   * @returns {Promise} Promessa com os dados do usuário registrado
-   */
   async register(userData, password) {
     try {
       const response = await api.post('/auth/register', { ...userData, password });
@@ -31,10 +20,6 @@ export const authService = {
     }
   },
 
-  /**
-   * Faz logout do usuário
-   * @returns {Promise} Promessa indicando sucesso do logout
-   */
   async logout() {
     try {
       const response = await api.post('/auth/logout');
@@ -44,10 +29,6 @@ export const authService = {
     }
   },
 
-  /**
-   * Obtém dados do perfil do usuário logado
-   * @returns {Promise} Promessa com os dados do perfil
-   */
   async getUserProfile() {
     try {
       const response = await api.get('/auth/profile');
@@ -57,11 +38,6 @@ export const authService = {
     }
   },
 
-  /**
-   * Atualiza os dados do perfil do usuário
-   * @param {Object} profileData - Novos dados do perfil
-   * @returns {Promise} Promessa com os dados atualizados
-   */
   async updateProfile(profileData) {
     try {
       const response = await api.put('/auth/profile', profileData);
@@ -71,11 +47,6 @@ export const authService = {
     }
   },
 
-  /**
-   * Altera a senha do usuário
-   * @param {Object} passwordData - Objeto com senhas atual e nova
-   * @returns {Promise} Promessa indicando sucesso da operação
-   */
   async updatePassword(passwordData) {
     try {
       const response = await api.put('/auth/password', passwordData);

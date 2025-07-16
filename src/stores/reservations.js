@@ -1,16 +1,15 @@
+
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import reservationService from '../services/reservationService';
 
 export const useReservationStore = defineStore('reservations', () => {
-  // Estado
   const reservations = ref([]);
   const userReservations = ref([]);
   const currentReservation = ref(null);
   const loading = ref(false);
   const error = ref(null);
   
-  // Getters
   const pendingReservations = computed(() => reservations.value.filter(reservation => reservation.status === 'Pendente'));
   const completedReservations = computed(() => reservations.value.filter(reservation => reservation.status === 'Concluída'));
   const canceledReservations = computed(() => reservations.value.filter(reservation => reservation.status === 'Cancelada'));
@@ -21,7 +20,6 @@ export const useReservationStore = defineStore('reservations', () => {
     return (id) => reservations.value.find(reservation => reservation.id_reserva === parseInt(id));
   });
   
-  // Ações
   async function fetchAllReservations(params = {}) {
     try {
       loading.value = true;
@@ -80,7 +78,6 @@ export const useReservationStore = defineStore('reservations', () => {
       
       const data = await reservationService.createReservation(reservationData);
       
-      // Adiciona a nova reserva à lista se a requisição for bem-sucedida
       if (reservations.value.length > 0) {
         reservations.value.unshift(data.reservation);
       }
@@ -105,19 +102,16 @@ export const useReservationStore = defineStore('reservations', () => {
       
       const data = await reservationService.cancelReservation(id);
       
-      // Atualiza a reserva na lista
       const index = reservations.value.findIndex(reservation => reservation.id_reserva === parseInt(id));
       if (index !== -1) {
         reservations.value[index] = data.reservation;
       }
       
-      // Atualiza também na lista de reservas do usuário
       const userIndex = userReservations.value.findIndex(reservation => reservation.id_reserva === parseInt(id));
       if (userIndex !== -1) {
         userReservations.value[userIndex] = data.reservation;
       }
       
-      // Atualiza a reserva atual se estiver visualizando
       if (currentReservation.value && currentReservation.value.id_reserva === parseInt(id)) {
         currentReservation.value = data.reservation;
       }
@@ -138,13 +132,11 @@ export const useReservationStore = defineStore('reservations', () => {
       
       const data = await reservationService.updateReservationStatus(id, status);
       
-      // Atualiza a reserva na lista
       const index = reservations.value.findIndex(reservation => reservation.id_reserva === parseInt(id));
       if (index !== -1) {
         reservations.value[index] = data.reservation;
       }
       
-      // Atualiza a reserva atual se estiver visualizando
       if (currentReservation.value && currentReservation.value.id_reserva === parseInt(id)) {
         currentReservation.value = data.reservation;
       }
@@ -165,13 +157,11 @@ export const useReservationStore = defineStore('reservations', () => {
       
       const data = await reservationService.convertToLoan(id, loanData);
       
-      // Atualiza a reserva na lista
       const index = reservations.value.findIndex(reservation => reservation.id_reserva === parseInt(id));
       if (index !== -1) {
         reservations.value[index] = data.reservation;
       }
       
-      // Atualiza a reserva atual se estiver visualizando
       if (currentReservation.value && currentReservation.value.id_reserva === parseInt(id)) {
         currentReservation.value = data.reservation;
       }
@@ -185,7 +175,6 @@ export const useReservationStore = defineStore('reservations', () => {
     }
   }
   
-  // Mock de dados para desenvolvimento sem API
   function initMockData() {
     reservations.value = [
       {

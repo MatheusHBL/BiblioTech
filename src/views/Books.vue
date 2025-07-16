@@ -1,15 +1,13 @@
+
 <template>
     <div class="container mx-auto px-4 py-8">
-      <!-- Cabeçalho -->
       <div class="mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Acervo de Livros</h1>
         <p class="text-gray-600 mt-2">Explore nossa coleção de livros disponíveis para empréstimo</p>
       </div>
       
-      <!-- Barra de busca e filtros -->
       <div class="bg-white p-4 rounded-lg shadow-md mb-6">
         <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
-          <!-- Busca -->
           <div class="flex-1">
             <div class="relative">
               <input
@@ -26,7 +24,6 @@
             </div>
           </div>
           
-          <!-- Filtro de categoria -->
           <div class="w-full md:w-48">
             <select 
               v-model="selectedCategory"
@@ -39,7 +36,6 @@
             </select>
           </div>
           
-          <!-- Botão de limpar filtros -->
           <button 
             @click="clearFilters"
             class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
@@ -49,12 +45,10 @@
         </div>
       </div>
       
-      <!-- Loading state -->
       <div v-if="loading" class="flex justify-center my-12">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
       
-      <!-- Sem resultados -->
       <div v-else-if="filteredBooks.length === 0" class="text-center my-12">
         <p class="text-gray-500 text-lg">Nenhum livro encontrado com os filtros selecionados.</p>
         <button 
@@ -65,7 +59,6 @@
         </button>
       </div>
       
-      <!-- Grid de livros -->
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <BookCard 
           v-for="book in filteredBooks" 
@@ -76,7 +69,6 @@
         />
       </div>
       
-      <!-- Paginação (simplificada) -->
       <div v-if="filteredBooks.length > 0" class="mt-8 flex justify-center">
         <nav class="flex items-center space-x-2">
           <button 
@@ -103,7 +95,6 @@
         </nav>
       </div>
       
-      <!-- Modal de reserva (simplificado) -->
       <div v-if="showReserveModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
           <h3 class="text-lg font-semibold mb-4">Confirmar Reserva</h3>
@@ -136,26 +127,21 @@
   
   const bookStore = useBookStore();
   
-  // Estado da página
   const loading = ref(false);
   const searchQuery = ref('');
   const selectedCategory = ref('');
   const currentPage = ref(1);
-  const itemsPerPage = 12; // Ajuste conforme necessário
+  const itemsPerPage = 12; 
   
-  // Modal de reserva
   const showReserveModal = ref(false);
   const selectedBook = ref(null);
   
-  // Dados dos livros e categorias
   const books = computed(() => bookStore.books);
   const categories = computed(() => bookStore.categories);
   
-  // Livros filtrados com base nos critérios de busca
   const filteredBooks = computed(() => {
     let result = [...books.value];
     
-    // Filtro por busca
     if (searchQuery.value) {
       const query = searchQuery.value.toLowerCase();
       result = result.filter(book => 
@@ -164,7 +150,6 @@
       );
     }
     
-    // Filtro por categoria
     if (selectedCategory.value) {
       result = result.filter(book => book.categoria === selectedCategory.value);
     }
@@ -172,40 +157,33 @@
     return result;
   });
   
-  // Total de páginas para paginação
   const totalPages = computed(() => {
     return Math.ceil(filteredBooks.value.length / itemsPerPage);
   });
   
-  // Limpar filtros
   const clearFilters = () => {
     searchQuery.value = '';
     selectedCategory.value = '';
     currentPage.value = 1;
   };
   
-  // Métodos para reserva
   const handleReserve = (book) => {
     selectedBook.value = book;
     showReserveModal.value = true;
   };
   
   const confirmReservation = () => {
-    // Aqui seria a chamada para a API para criar a reserva
-    // Por enquanto, apenas simulamos com um alerta
     alert(`Reserva confirmada para o livro "${selectedBook.value.titulo}"`);
     showReserveModal.value = false;
     selectedBook.value = null;
   };
   
-  // Carregamento inicial de dados
   onMounted(async () => {
     loading.value = true;
     await bookStore.fetchBooks();
     loading.value = false;
   });
   
-  // Reset page when filters change
   watch([searchQuery, selectedCategory], () => {
     currentPage.value = 1;
   });

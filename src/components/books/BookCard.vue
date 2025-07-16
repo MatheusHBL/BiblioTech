@@ -1,13 +1,11 @@
+
 <template>
   <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-    <!-- Imagem do livro -->
     <div class="relative h-60 bg-gray-200 overflow-hidden">
-      <!-- Placeholder para imagem -->
       <div class="h-full w-full bg-gray-300 flex items-center justify-center text-gray-500">
         <span class="text-sm">Imagem do Livro</span>
       </div>
       
-      <!-- Badge de disponibilidade -->
       <div 
         v-if="book.quantidade_disponivel > 0" 
         class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded"
@@ -21,7 +19,6 @@
         Indisponível
       </div>
       
-      <!-- Badge de Novo -->
       <div 
         v-if="isOffered" 
         class="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded"
@@ -30,18 +27,15 @@
       </div>
     </div>
     
-    <!-- Informações do livro -->
     <div class="p-4">
       <h3 class="text-lg font-semibold mb-1 truncate">{{ book.titulo }}</h3>
       <p class="text-gray-600 text-sm mb-2">{{ book.autor }}</p>
       
-      <!-- Categoria e Ano -->
       <div class="flex justify-between items-center mb-3">
         <span class="text-primary text-sm font-medium">{{ book.categoria }}</span>
         <span class="text-gray-500 text-sm">{{ book.ano_publicacao }}</span>
       </div>
       
-      <!-- Ações -->
       <div class="flex justify-between items-center mt-2">
         <router-link 
           :to="{ name: 'book-detail', params: { id: book.id_livro }}" 
@@ -90,7 +84,6 @@ const emit = defineEmits(['reserve']);
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Método para lidar com a reserva
 const handleReserve = () => {
   if (authStore.isAuthenticated) {
     emit('reserve', props.book);

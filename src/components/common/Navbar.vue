@@ -1,13 +1,12 @@
+
 <template>
   <nav class="bg-white shadow-md">
     <div class="container mx-auto px-4 py-3">
       <div class="flex justify-between items-center">
-        <!-- Logo e nome -->
         <router-link to="/dashboard" class="flex items-center">
           <div class="text-primary font-bold text-2xl">BIBLIOTECH</div>
         </router-link>
 
-        <!-- Links de navegação -->
         <div class="hidden md:flex space-x-8">
           <router-link to="/dashboard" class="text-gray-700 hover:text-primary">Início</router-link>
           <router-link to="/books" class="text-gray-700 hover:text-primary">Acervo</router-link>
@@ -17,7 +16,6 @@
           </template>
         </div>
 
-        <!-- Usuário e ações -->
         <div class="flex items-center space-x-4">
           <div class="relative">
             <button @click="toggleDropdown" class="flex items-center space-x-2 text-gray-700 hover:text-primary focus:outline-none">
@@ -33,7 +31,6 @@
           </div>
         </div>
 
-        <!-- Menu móvel -->
         <div class="md:hidden">
           <button @click="toggleMobileMenu" class="text-gray-700 hover:text-primary focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +41,6 @@
         </div>
       </div>
 
-      <!-- Menu móvel (expandido) -->
       <div v-if="showMobileMenu" class="md:hidden mt-4 space-y-2">
         <router-link to="/dashboard" class="block py-2 text-gray-700 hover:text-primary">Início</router-link>
         <router-link to="/books" class="block py-2 text-gray-700 hover:text-primary">Acervo</router-link>
@@ -67,15 +63,12 @@ import { useAuthStore } from '../../stores/auth';
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Estado para controlar os dropdowns
 const showDropdown = ref(false);
 const showMobileMenu = ref(false);
 
-// Computed properties
 const isAdmin = computed(() => authStore.isAdmin);
 const userName = computed(() => authStore.userName || 'Usuário');
 
-// Métodos
 const toggleDropdown = () => {
   showDropdown.value = !showDropdown.value;
 };
@@ -89,14 +82,12 @@ const logout = () => {
   router.push('/');
 };
 
-// Fechar dropdown quando clicar fora
 const closeDropdown = (event) => {
   if (showDropdown.value && !event.target.closest('.relative')) {
     showDropdown.value = false;
   }
 };
 
-// Event listeners
 onMounted(() => {
   document.addEventListener('click', closeDropdown);
 });

@@ -1,6 +1,6 @@
+
 <template>
     <form @submit.prevent="handleSubmit" class="space-y-6">
-      <!-- Seleção de usuário -->
       <div>
         <label for="user" class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
         <div class="relative">
@@ -24,7 +24,6 @@
         <p v-if="errors.userId" class="mt-1 text-sm text-red-600">{{ errors.userId }}</p>
       </div>
       
-      <!-- Seleção de livro -->
       <div>
         <label for="book" class="block text-sm font-medium text-gray-700 mb-1">Livro</label>
         <div class="relative">
@@ -48,7 +47,6 @@
         <p v-if="errors.bookId" class="mt-1 text-sm text-red-600">{{ errors.bookId }}</p>
       </div>
       
-      <!-- Datas -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label for="loanDate" class="block text-sm font-medium text-gray-700 mb-1">Data do Empréstimo</label>
@@ -74,7 +72,6 @@
         </div>
       </div>
       
-      <!-- Observações (opcional) -->
       <div>
         <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
         <textarea
@@ -85,7 +82,6 @@
         ></textarea>
       </div>
       
-      <!-- Botões de ação -->
       <div class="flex justify-end space-x-3">
         <button 
           type="button"
@@ -135,10 +131,8 @@
   
   const emit = defineEmits(['submit', 'cancel']);
   
-  // Hook de validação
   const { validateDate } = useValidation();
   
-  // Estado do formulário
   const formData = ref({
     userId: props.initialData.id_usuario_fk || '',
     bookId: props.initialData.id_livro_fk || '',
@@ -147,7 +141,6 @@
     notes: props.initialData.observacoes || ''
   });
   
-  // Estado de erros
   const errors = ref({
     userId: '',
     bookId: '',
@@ -155,12 +148,10 @@
     returnDate: ''
   });
   
-  // Texto do botão de envio
   const submitButtonText = computed(() => {
     return props.isEdit ? 'Atualizar Empréstimo' : 'Registrar Empréstimo';
   });
   
-  // Métodos
   const validateForm = () => {
     let isValid = true;
     errors.value = {
@@ -170,33 +161,28 @@
       returnDate: ''
     };
     
-    // Validação do usuário
     if (!formData.value.userId) {
       errors.value.userId = 'Selecione um usuário';
       isValid = false;
     }
     
-    // Validação do livro
     if (!formData.value.bookId) {
       errors.value.bookId = 'Selecione um livro';
       isValid = false;
     }
     
-    // Validação da data de empréstimo
     const loanDateError = validateDate(formData.value.loanDate);
     if (loanDateError) {
       errors.value.loanDate = loanDateError;
       isValid = false;
     }
     
-    // Validação da data de devolução
     const returnDateError = validateDate(formData.value.returnDate);
     if (returnDateError) {
       errors.value.returnDate = returnDateError;
       isValid = false;
     }
     
-    // Validação da relação entre datas
     if (isValid && new Date(formData.value.returnDate) <= new Date(formData.value.loanDate)) {
       errors.value.returnDate = 'A data de devolução deve ser posterior à data de empréstimo';
       isValid = false;
@@ -208,15 +194,13 @@
   const handleSubmit = () => {
     if (!validateForm()) return;
     
-    // Emit do evento submit com os dados do formulário
     emit('submit', { ...formData.value });
   };
   
-  // Configuração de data padrão para devolução (se não estiver em modo de edição)
   onMounted(() => {
     if (!props.isEdit && !formData.value.returnDate) {
       const defaultDate = new Date();
-      defaultDate.setDate(defaultDate.getDate() + 15); // 15 dias de prazo padrão
+      defaultDate.setDate(defaultDate.getDate() + 15); 
       formData.value.returnDate = defaultDate.toISOString().substr(0, 10);
     }
   });

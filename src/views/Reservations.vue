@@ -1,12 +1,11 @@
+
 <template>
   <div class="container mx-auto px-4 py-8">
-    <!-- Cabeçalho -->
     <div class="mb-6">
       <h1 class="text-3xl font-bold text-gray-800">{{ isAdmin ? 'Gerenciamento de Reservas' : 'Minhas Reservas' }}</h1>
       <p class="text-gray-600 mt-2">{{ isAdmin ? 'Gerencie todas as reservas da biblioteca' : 'Gerencie suas reservas de livros' }}</p>
     </div>
     
-    <!-- Ferramentas de busca e filtro -->
     <div class="mb-6">
       <BookSearch 
         :initial-search="searchQuery"
@@ -20,7 +19,6 @@
       />
     </div>
     
-    <!-- Lista de reservas -->
     <ReservationList 
       :reservations="filteredReservations"
       :loading="loading"
@@ -34,13 +32,11 @@
       @page-change="handlePageChange"
     />
     
-    <!-- Modal de conversão para empréstimo (apenas admin) -->
     <div v-if="showLoanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
         <h3 class="text-lg font-semibold mb-4">Converter Reserva em Empréstimo</h3>
         <p>Você está prestes a converter a reserva do livro <span class="font-semibold">{{ selectedReservation?.titulo }}</span> em um empréstimo.</p>
         
-        <!-- Formulário simplificado -->
         <div class="mt-4 space-y-4">
           <div>
             <label for="loanDate" class="block text-sm font-medium text-gray-700 mb-1">Data do Empréstimo</label>
@@ -96,7 +92,6 @@ const reservationStore = useReservationStore();
 const authStore = useAuthStore();
 const loanStore = useLoanStore();
 
-// Estado
 const loading = ref(false);
 const searchQuery = ref('');
 const statusFilter = ref('');
@@ -105,17 +100,15 @@ const itemsPerPage = ref(10);
 const showLoanModal = ref(false);
 const selectedReservation = ref(null);
 
-// Dados do empréstimo
 const loanData = ref({
   loanDate: new Date().toISOString().slice(0, 10),
   returnDate: (() => {
     const date = new Date();
-    date.setDate(date.getDate() + 15); // Padrão: 15 dias
+    date.setDate(date.getDate() + 15); 
     return date.toISOString().slice(0, 10);
   })()
 });
 
-// Computed properties
 const isAdmin = computed(() => authStore.isAdmin);
 
 const statusOptions = [
@@ -125,15 +118,12 @@ const statusOptions = [
 ];
 
 const reservations = computed(() => {
-  // Se for admin, mostra todas as reservas, caso contrário, apenas as do usuário
   return isAdmin.value ? reservationStore.reservations : reservationStore.userReservations;
 });
 
-// Filtragem de reservas
 const filteredReservations = computed(() => {
   let result = [...reservations.value];
   
-  // Filtro por busca
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase();
     result = result.filter(reservation => 
@@ -142,7 +132,6 @@ const filteredReservations = computed(() => {
     );
   }
   
-  // Filtro por status
   if (statusFilter.value) {
     result = result.filter(reservation => reservation.status === statusFilter.value);
   }
@@ -150,11 +139,9 @@ const filteredReservations = computed(() => {
   return result;
 });
 
-// Paginação
 const totalItems = computed(() => filteredReservations.value.length);
 const totalPages = computed(() => Math.ceil(totalItems.value / itemsPerPage.value));
 
-// Métodos
 const loadReservations = async () => {
   loading.value = true;
   
@@ -195,7 +182,6 @@ const handleViewReservation = (reservation) => {
   router.push(`/books/${reservation.id_livro_fk}`);
 };
 
-// Cancelamento de reserva
 const handleCancelReservation = async (reservation) => {
   try {
     loading.value = true;
@@ -215,7 +201,6 @@ const handleCancelReservation = async (reservation) => {
   }
 };
 
-// Conversão de reserva para empréstimo (apenas admin)
 const handleConvertToLoan = (reservation) => {
   selectedReservation.value = reservation;
   showLoanModal.value = true;
@@ -242,11 +227,8 @@ const confirmConvertToLoan = async () => {
       alert(`Reserva convertida em empréstimo com sucesso.`);
       closeLoanModal();
       
-      // Recarregar dados
       await loadReservations();
       
-      // Opcional: redirecionar para página de empréstimos
-      // router.push('/loans');
     } else {
       alert(`Erro ao converter reserva: ${result.error}`);
     }
@@ -258,12 +240,8 @@ const confirmConvertToLoan = async () => {
   }
 };
 
-// Carregar dados na inicialização
 onMounted(() => {
-  // Use dados mockados para desenvolvimento
   reservationStore.initMockData();
   
-  // Ou carregue do servidor quando tiver a API
-  // loadReservations();
 });
 </script>

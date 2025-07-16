@@ -1,17 +1,15 @@
+
 <template>
   <div>
-    <!-- Loading state -->
     <div v-if="loading" class="flex justify-center my-8">
       <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
     </div>
     
-    <!-- Sem reservas -->
     <div v-else-if="reservations.length === 0" class="text-center my-8">
       <p class="text-gray-500 text-lg">Nenhuma reserva encontrada.</p>
       <slot name="empty"></slot>
     </div>
     
-    <!-- Tabela de reservas -->
     <div v-else class="bg-white rounded-lg shadow-md overflow-hidden">
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
@@ -20,7 +18,6 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Livro
               </th>
-              <!-- Coluna de usuário - sempre visível para Admin -->
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Usuário
               </th>
@@ -40,7 +37,6 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="h-10 w-10 flex-shrink-0 bg-gray-300 rounded">
-                    <!-- Placeholder para imagem -->
                   </div>
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">{{ reservation.titulo }}</div>
@@ -48,7 +44,6 @@
                   </div>
                 </div>
               </td>
-              <!-- Dados do usuário -->
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">{{ reservation.nome_usuario }}</div>
                 <div v-if="reservation.tipo_usuario" class="text-sm text-gray-500">{{ reservation.tipo_usuario }}</div>
@@ -70,7 +65,6 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex space-x-3">
-                  <!-- Admin pode converter em empréstimo -->
                   <button 
                     v-if="reservation.status === 'Pendente' && isAdmin"
                     @click="$emit('convert', reservation)"
@@ -79,7 +73,6 @@
                     Converter em Empréstimo
                   </button>
                   
-                  <!-- Opção de cancelar reserva - disponível para admin em qualquer reserva pendente -->
                   <button 
                     v-if="reservation.status === 'Pendente'"
                     @click="$emit('cancel', reservation)"
@@ -101,7 +94,6 @@
         </table>
       </div>
       
-      <!-- Paginação (simplificada) -->
       <div v-if="totalPages > 1" class="px-6 py-3 flex items-center justify-between border-t border-gray-200">
         <div class="text-sm text-gray-700">
           Mostrando <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span> a 
@@ -131,7 +123,6 @@
       </div>
     </div>
     
-    <!-- Modal de confirmação de cancelamento -->
     <div v-if="showCancelModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
         <h3 class="text-lg font-semibold mb-4">Confirmar Cancelamento</h3>
@@ -192,15 +183,12 @@ const props = defineProps({
 
 const emit = defineEmits(['cancel', 'convert', 'view', 'page-change']);
 
-// Verificar se o usuário é administrador
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.isAdmin);
 
-// Estado para modal de cancelamento
 const showCancelModal = ref(false);
 const selectedReservation = ref(null);
 
-// Métodos para manipular o modal de cancelamento
 const openCancelModal = (reservation) => {
   selectedReservation.value = reservation;
   showCancelModal.value = true;
@@ -216,6 +204,5 @@ const confirmCancel = () => {
   closeCancelModal();
 };
 
-// Expor o método openCancelModal para o componente pai
 defineExpose({ openCancelModal });
 </script>

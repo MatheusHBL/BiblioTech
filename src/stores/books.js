@@ -1,15 +1,14 @@
+
 import axios from '../utils/axios'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useBookStore = defineStore('books', () => {
-  // Estado
   const books = ref([])
   const loading = ref(false)
   const error = ref(null)
   const categories = ref([])
   
-  // Dados mockados para desenvolvimento inicial
   const mockBooks = [
     {
       id_livro: 1,
@@ -20,7 +19,7 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 3,
       autor: 'Robin Parrish',
       categoria: 'Aventura',
-      preco: 15.00, // Para exibição na UI
+      preco: 15.00, 
       imagem: '/src/assets/images/dragon-world.jpg'
     },
     {
@@ -32,7 +31,7 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 2,
       autor: 'Unknown',
       categoria: 'Aventura',
-      preco: 12.00, // Para exibição na UI
+      preco: 12.00, 
       imagem: '/src/assets/images/blue-water.jpg'
     },
     {
@@ -44,7 +43,7 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 5,
       autor: 'Bowen Greenwood',
       categoria: 'Crianças',
-      preco: 15.00, // Para exibição na UI
+      preco: 15.00, 
       imagem: '/src/assets/images/animals-life.jpg'
     },
     {
@@ -56,7 +55,7 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 1,
       autor: 'Lando Pigose',
       categoria: 'Biografia',
-      preco: 15.00, // Para exibição na UI
+      preco: 15.00, 
       imagem: '/src/assets/images/memorise.jpg'
     },
     {
@@ -68,7 +67,7 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 2,
       autor: 'Madhu Sashon',
       categoria: 'Biografia',
-      preco: 35.00, // Para exibição na UI
+      preco: 35.00, 
       imagem: '/src/assets/images/olio.jpg'
     },
     {
@@ -80,18 +79,15 @@ export const useBookStore = defineStore('books', () => {
       quantidade_disponivel: 4,
       autor: 'Rakib Jon',
       categoria: 'Romance',
-      preco: 20.00, // Para exibição na UI
+      preco: 20.00, 
       imagem: '/src/assets/images/hunter-house.jpg'
     }
   ]
   
-  // Inicializa os dados mockados
   books.value = mockBooks
   categories.value = ['Aventura', 'Biografia', 'Crianças', 'Cozinhar', 'Romance']
   
-  // Getters
   const trendingBooks = computed(() => {
-    // Simulação de livros em destaque
     return books.value.slice(0, 4)
   })
   
@@ -103,7 +99,6 @@ export const useBookStore = defineStore('books', () => {
     return (category) => books.value.filter(book => book.categoria === category)
   })
   
-  // Ações
   async function fetchBooks() {
     try {
       loading.value = true
@@ -128,8 +123,6 @@ export const useBookStore = defineStore('books', () => {
       loading.value = true
       error.value = null
       
-      // Aqui seria a chamada para a API
-      // Por enquanto, usamos os dados mockados
       const book = books.value.find(b => b.id_livro === parseInt(id))
       
       loading.value = false
@@ -146,8 +139,6 @@ export const useBookStore = defineStore('books', () => {
       loading.value = true
       error.value = null
       
-      // Aqui seria a chamada para a API
-      // Por enquanto, filtramos os dados mockados
       const filteredBooks = books.value.filter(
         book => book.titulo.toLowerCase().includes(query.toLowerCase()) || 
                 book.autor.toLowerCase().includes(query.toLowerCase())

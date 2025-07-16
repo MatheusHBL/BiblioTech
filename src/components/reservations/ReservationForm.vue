@@ -1,6 +1,6 @@
+
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-6">
-    <!-- Campo oculto ou mostrado dependendo do modo admin -->
     <div v-if="isAdmin">
       <label for="user" class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
       <div class="relative">
@@ -24,7 +24,6 @@
       <p v-if="errors.userId" class="mt-1 text-sm text-red-600">{{ errors.userId }}</p>
     </div>
     
-    <!-- Seleção de livro -->
     <div>
       <label for="book" class="block text-sm font-medium text-gray-700 mb-1">Livro</label>
       <div class="relative">
@@ -48,7 +47,6 @@
       <p v-if="errors.bookId" class="mt-1 text-sm text-red-600">{{ errors.bookId }}</p>
     </div>
     
-    <!-- Notas/observações (opcional) -->
     <div>
       <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Observações (opcional)</label>
       <textarea
@@ -59,7 +57,6 @@
       ></textarea>
     </div>
     
-    <!-- Botões de ação -->
     <div class="flex justify-end space-x-3">
       <button 
         type="button"
@@ -112,25 +109,21 @@ const emit = defineEmits(['submit', 'cancel']);
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.isAdmin);
 
-// Estado do formulário
 const formData = ref({
   userId: props.initialData.id_usuario_fk || authStore.user?.id_usuario || '',
   bookId: props.initialData.id_livro_fk || '',
   notes: props.initialData.observacoes || ''
 });
 
-// Estado de erros
 const errors = ref({
   userId: '',
   bookId: ''
 });
 
-// Texto do botão de envio
 const submitButtonText = computed(() => {
   return props.isEdit ? 'Atualizar Reserva' : 'Confirmar Reserva';
 });
 
-// Métodos
 const validateForm = () => {
   let isValid = true;
   errors.value = {
@@ -138,13 +131,11 @@ const validateForm = () => {
     bookId: ''
   };
   
-  // Validação do usuário
   if (!formData.value.userId) {
     errors.value.userId = 'Selecione um usuário';
     isValid = false;
   }
   
-  // Validação do livro
   if (!formData.value.bookId) {
     errors.value.bookId = 'Selecione um livro';
     isValid = false;
@@ -156,7 +147,6 @@ const validateForm = () => {
 const handleSubmit = () => {
   if (!validateForm()) return;
   
-  // Emit do evento submit com os dados do formulário
   emit('submit', { ...formData.value });
 };
 </script>

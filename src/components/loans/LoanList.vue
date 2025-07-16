@@ -1,17 +1,15 @@
+
 <template>
   <div>
-    <!-- Loading state -->
     <div v-if="loading" class="flex justify-center my-8">
       <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
     </div>
     
-    <!-- Sem empréstimos -->
     <div v-else-if="loans.length === 0" class="text-center my-8">
       <p class="text-gray-500 text-lg">Nenhum empréstimo encontrado.</p>
       <slot name="empty"></slot>
     </div>
     
-    <!-- Tabela de empréstimos -->
     <div v-else class="bg-white rounded-lg shadow-md overflow-hidden">
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
@@ -42,7 +40,6 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="h-10 w-10 flex-shrink-0 bg-gray-300 rounded">
-                    <!-- Placeholder para imagem -->
                   </div>
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">{{ loan.titulo }}</div>
@@ -106,7 +103,6 @@
         </table>
       </div>
       
-      <!-- Paginação (simplificada) -->
       <div v-if="totalPages > 1" class="px-6 py-3 flex items-center justify-between border-t border-gray-200">
         <div class="text-sm text-gray-700">
           Mostrando <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span> a 
@@ -141,7 +137,6 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
 
-// Importar utilitário de formatação
 import { formatDate } from '../../utils/formatters';
 
 const props = defineProps({
@@ -177,7 +172,6 @@ const props = defineProps({
 
 const emit = defineEmits(['return', 'extend', 'view', 'page-change']);
 
-// Método para calcular dias restantes
 const getDaysRemaining = (dueDate) => {
   if (!dueDate) return 0;
   

@@ -1,22 +1,18 @@
+
 <template>
     <div class="container mx-auto px-4 py-8">
-      <!-- Cabeçalho -->
       <div class="mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Gerenciamento de Empréstimos</h1>
         <p class="text-gray-600 mt-2">Controle todos os empréstimos da biblioteca</p>
       </div>
       
-      <!-- Loading state -->
       <div v-if="loading" class="flex justify-center my-12">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
       
-      <!-- Conteúdo principal -->
       <div v-else>
-        <!-- Ações e filtros -->
         <div class="mb-6 bg-white p-4 rounded-lg shadow-md">
           <div class="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0">
-            <!-- Filtros e busca -->
             <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
               <div class="w-full md:w-64">
                 <input
@@ -37,7 +33,6 @@
               </select>
             </div>
             
-            <!-- Botão de novo empréstimo -->
             <button
               @click="showNewLoanModal = true"
               class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -52,7 +47,6 @@
           </div>
         </div>
         
-        <!-- Sem empréstimos -->
         <div v-if="filteredLoans.length === 0" class="bg-white p-8 rounded-lg shadow-md text-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -67,7 +61,6 @@
           </button>
         </div>
         
-        <!-- Tabela de empréstimos -->
         <div v-else class="bg-white rounded-lg shadow-md overflow-hidden">
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -98,7 +91,6 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="h-10 w-10 flex-shrink-0 bg-gray-300 rounded">
-                        <!-- Placeholder para imagem -->
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">{{ loan.titulo }}</div>
@@ -147,7 +139,6 @@
             </table>
           </div>
           
-          <!-- Paginação simplificada -->
           <div class="px-6 py-3 flex items-center justify-between border-t border-gray-200">
             <div class="flex-1 flex justify-between sm:hidden">
               <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
@@ -187,14 +178,12 @@
         </div>
       </div>
       
-      <!-- Modal de devolução -->
       <div v-if="showReturnModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
           <h3 class="text-lg font-semibold mb-4">Confirmar Devolução</h3>
           <p>Você está prestes a registrar a devolução do livro <span class="font-semibold">{{ selectedLoan?.titulo }}</span> 
           emprestado para <span class="font-semibold">{{ selectedLoan?.nome_usuario }}</span>.</p>
           
-          <!-- Status e datas -->
           <div class="mt-4 bg-gray-50 p-3 rounded">
             <div class="grid grid-cols-2 gap-3">
               <div>
@@ -225,15 +214,12 @@
         </div>
       </div>
       
-      <!-- Modal de novo empréstimo -->
       <div v-if="showNewLoanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
           <h3 class="text-lg font-semibold mb-4">Novo Empréstimo</h3>
           
-          <!-- Formulário -->
           <form @submit.prevent="createLoan">
             <div class="space-y-4">
-              <!-- Seleção de usuário -->
               <div>
                 <label for="user" class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
                 <select 
@@ -249,7 +235,6 @@
                 </select>
               </div>
               
-              <!-- Seleção de livro -->
               <div>
                 <label for="book" class="block text-sm font-medium text-gray-700 mb-1">Livro</label>
                 <select 
@@ -265,7 +250,6 @@
                 </select>
               </div>
               
-              <!-- Datas -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label for="loanDate" class="block text-sm font-medium text-gray-700 mb-1">Data do Empréstimo</label>
@@ -319,7 +303,6 @@
   const router = useRouter();
   const bookStore = useBookStore();
   
-  // Estado da página
   const loading = ref(true);
   const searchQuery = ref('');
   const statusFilter = ref('');
@@ -327,7 +310,6 @@
   const showNewLoanModal = ref(false);
   const selectedLoan = ref(null);
   
-  // Dados mockados para desenvolvimento
   const loans = ref([
     {
       id_emprestimo: 1,
@@ -370,15 +352,13 @@
     }
   ]);
   
-  // Dados para formulário de novo empréstimo
   const newLoan = ref({
     userId: '',
     bookId: '',
-    loanDate: new Date().toISOString().substr(0, 10), // Data atual formatada como YYYY-MM-DD
+    loanDate: new Date().toISOString().substr(0, 10), 
     returnDate: ''
   });
   
-  // Lista mockada de usuários
   const users = ref([
     { id_usuario: 1, nome: 'João Silva', tipo_usuario: 'Estudante' },
     { id_usuario: 2, nome: 'Maria Souza', tipo_usuario: 'Professor' },
@@ -386,16 +366,13 @@
     { id_usuario: 4, nome: 'Ana Oliveira', tipo_usuario: 'Estudante' }
   ]);
   
-  // Livros disponíveis para empréstimo
   const availableBooks = computed(() => {
     return bookStore.books.filter(book => book.quantidade_disponivel > 0);
   });
   
-  // Empréstimos filtrados com base nos critérios de busca
   const filteredLoans = computed(() => {
     let result = [...loans.value];
     
-    // Filtro por busca
     if (searchQuery.value) {
       const query = searchQuery.value.toLowerCase();
       result = result.filter(loan => 
@@ -404,7 +381,6 @@
       );
     }
     
-    // Filtro por status
     if (statusFilter.value) {
       result = result.filter(loan => loan.status === statusFilter.value);
     }
@@ -412,7 +388,6 @@
     return result;
   });
   
-  // Formatação de data
   const formatDate = (dateString) => {
     if (!dateString) return '-';
     
@@ -424,22 +399,17 @@
     }).format(date);
   };
   
-  // Limpar filtros
   const clearFilters = () => {
     searchQuery.value = '';
     statusFilter.value = '';
   };
   
-  // Gerenciamento de devolução
   const handleReturnBook = (loan) => {
     selectedLoan.value = loan;
     showReturnModal.value = true;
   };
   
   const confirmReturn = () => {
-    // Aqui seria a chamada para a API para registrar a devolução
-    // Por enquanto, apenas simulamos a alteração localmente
-    
     const index = loans.value.findIndex(l => l.id_emprestimo === selectedLoan.value.id_emprestimo);
     if (index !== -1) {
       loans.value[index].status = 'Devolvido';
@@ -450,16 +420,11 @@
     selectedLoan.value = null;
   };
   
-  // Visualizar detalhes do livro
   const handleViewDetails = (loan) => {
     router.push(`/books/${loan.id_livro_fk}`);
   };
   
-  // Criar novo empréstimo
   const createLoan = () => {
-    // Aqui seria a chamada para a API para criar o empréstimo
-    // Por enquanto, apenas simulamos a adição localmente
-    
     const userObj = users.value.find(u => u.id_usuario === parseInt(newLoan.value.userId));
     const bookObj = bookStore.getBookById(newLoan.value.bookId);
     
@@ -480,7 +445,6 @@
       
       loans.value.unshift(newLoanObj);
       
-      // Reset formulário
       newLoan.value = {
         userId: '',
         bookId: '',
@@ -492,12 +456,10 @@
     }
   };
   
-  // Carregamento inicial
   onMounted(async () => {
     await bookStore.fetchBooks();
     loading.value = false;
     
-    // Calcula uma data padrão para devolução (15 dias à frente)
     const defaultDate = new Date();
     defaultDate.setDate(defaultDate.getDate() + 15);
     newLoan.value.returnDate = defaultDate.toISOString().substr(0, 10);
