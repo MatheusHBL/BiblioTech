@@ -3,7 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 @layer base {
   body {
     @apply font-sans bg-light-bg text-dark-text;
@@ -46,4 +46,4 @@
   .label {
     @apply block text-sm font-medium text-gray-700 mb-1;
   }
-}
+} */
