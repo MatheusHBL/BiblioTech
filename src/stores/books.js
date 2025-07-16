@@ -1,3 +1,4 @@
+import axios from '../utils/axios'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
@@ -108,14 +109,16 @@ export const useBookStore = defineStore('books', () => {
       loading.value = true
       error.value = null
       
-      // Aqui seria a chamada para a API
-      // Por enquanto, usamos os dados mockados
+      const result = await axios.get('/livros')
+      books.value = result.data
+      console.log(result.data)
       
       loading.value = false
       return { success: true }
     } catch (err) {
       loading.value = false
       error.value = err.message
+      console.error('Erro ao buscar livros:', err)
       return { success: false, error: err.message }
     }
   }

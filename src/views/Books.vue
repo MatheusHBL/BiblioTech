@@ -132,6 +132,7 @@
   import { ref, computed, onMounted, watch } from 'vue';
   import { useBookStore } from '../stores/books';
   import BookCard from '../components/books/BookCard.vue';
+  import axios from '../utils/axios';
   
   const bookStore = useBookStore();
   
