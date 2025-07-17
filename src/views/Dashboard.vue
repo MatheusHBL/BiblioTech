@@ -6,26 +6,6 @@
       <p class="text-gray-600 mt-2">Confira as novidades e atividades na sua conta.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">Livros Disponíveis</h3>
-        <p class="text-3xl font-bold text-primary">{{ stats.availableBooks }}</p>
-        <p class="text-gray-500 text-sm mt-2">Total de livros no acervo</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">Minhas Reservas</h3>
-        <p class="text-3xl font-bold text-primary">{{ stats.userReservations }}</p>
-        <p class="text-gray-500 text-sm mt-2">Reservas ativas</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">Meus Empréstimos</h3>
-        <p class="text-3xl font-bold text-primary">{{ stats.userLoans }}</p>
-        <p class="text-gray-500 text-sm mt-2">Empréstimos ativos</p>
-      </div>
-    </div>
-
     <div class="mb-10">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Livros em Destaque</h2>
