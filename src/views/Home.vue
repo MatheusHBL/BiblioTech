@@ -75,53 +75,6 @@
         </div>
       </div>
   
-      <div class="bg-gray-100 py-16">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl font-bold text-center mb-12">O Que Nossos Usuários Dizem</h2>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-lg shadow-md">
-              <div class="flex items-center mb-4">
-                <div class="bg-gray-200 rounded-full w-12 h-12 mr-4"></div>
-                <div>
-                  <h4 class="font-semibold">Maria Silva</h4>
-                  <p class="text-sm text-gray-500">Estudante</p>
-                </div>
-              </div>
-              <p class="text-gray-600">
-                "O Bibliotech facilitou muito minha vida acadêmica. Agora consigo reservar livros de forma rápida e organizar minhas leituras."
-              </p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md">
-              <div class="flex items-center mb-4">
-                <div class="bg-gray-200 rounded-full w-12 h-12 mr-4"></div>
-                <div>
-                  <h4 class="font-semibold">Carlos Mendes</h4>
-                  <p class="text-sm text-gray-500">Professor</p>
-                </div>
-              </div>
-              <p class="text-gray-600">
-                "Como professor, encontro no Bibliotech uma ferramenta essencial para organizar as leituras recomendadas aos meus alunos."
-              </p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md">
-              <div class="flex items-center mb-4">
-                <div class="bg-gray-200 rounded-full w-12 h-12 mr-4"></div>
-                <div>
-                  <h4 class="font-semibold">Ana Oliveira</h4>
-                  <p class="text-sm text-gray-500">Bibliotecária</p>
-                </div>
-              </div>
-              <p class="text-gray-600">
-                "O sistema simplificou nossos processos, reduzindo erros e tornando a gestão da biblioteca muito mais eficiente."
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-  
       <div class="py-16">
         <div class="container mx-auto px-4 text-center">
           <h2 class="text-3xl font-bold mb-6">Pronto para começar?</h2>
